@@ -15,14 +15,14 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @Column(name="first_name", length=255)
-    private String firstName;
-    @Column(name="last_name", length=255)
-    private String lastName;
+    @Column(name="name", length=255)
+    private String name;
     @Column(name="username", nullable=false, length=255)
     private String username;
     @Column(name="password", nullable=false, length=255)
     private String password;
+    @Column(name="phone", length=255)
+	private String phone;
 
 
     public Users() {
@@ -37,22 +37,12 @@ public class Users {
         return this;
     }
 
-  
-
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getUsername() {
@@ -69,6 +59,14 @@ public class Users {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 }

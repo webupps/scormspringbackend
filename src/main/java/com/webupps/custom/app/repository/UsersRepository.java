@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.webupps.custom.app.model.Users;
 
 public interface UsersRepository extends JpaRepository<Users, Integer> {
-    List<Users> findByName(String username);
+    List<Users> findByName(String name);
 
 }
