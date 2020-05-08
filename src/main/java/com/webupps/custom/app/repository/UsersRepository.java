@@ -8,5 +8,6 @@ import com.webupps.custom.app.model.Users;
 
 public interface UsersRepository extends JpaRepository<Users, Integer> {
     List<Users> findByName(String name);
+    List<Users> findByUsername(String username);
 
 }

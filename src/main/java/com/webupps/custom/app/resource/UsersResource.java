@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.webupps.custom.app.model.Users;
 import com.webupps.custom.app.repository.UsersRepository;
@@ -42,6 +42,9 @@ public class UsersResource {
 	
     @PostMapping("/add")
     public ResponseEntity<Users> addUsers(@RequestBody Users users) {
+    	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
+    	String encodedPassword = passwordEncoder.encode(users.getPassword());
+    	System.out.print(encodedPassword);
        // Users updated = service.createOrUpdateEmployee(employee);
     	if(phoneValidatorService.validatePhoneNumber(users.getPhone())) {
     		 // return new ResponseEntity<Users>(users, new HttpHeaders(), HttpStatus.OK);
