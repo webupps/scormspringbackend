@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.webupps.custom.app.repository.UsersRepository;
 import com.webupps.custom.app.service.DefaultUserDetailsService;
@@ -36,11 +37,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			    //.loginPage("/login").permitAll()
 			    .and().csrf().disable();*/
 		 
-		 http
+		 http   .logout()
+                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                 .and()
 			    .authorizeRequests()
 			    .antMatchers("/v1/admin/**").hasRole("ADMIN")
 				.antMatchers("/v1/greeting/hello").hasRole("USER")
 				.antMatchers(HttpMethod.POST,"/v1/users/registration").permitAll()
+				.antMatchers("/logout").permitAll()
 				.antMatchers("/").permitAll()
 		        .anyRequest().authenticated()
 		        .and().csrf().disable()
