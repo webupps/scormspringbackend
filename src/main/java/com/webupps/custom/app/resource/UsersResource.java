@@ -1,8 +1,8 @@
-package com.webupps.custom.app.resource;
+ package com.webupps.custom.app.resource;
 
-import java.util.Collections;
+///import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+//import java.util.Map;
 
 //import javax.validation.Valid;
 
@@ -33,7 +33,10 @@ public class UsersResource {
 	@Autowired
 	private PhoneValidatorService phoneValidatorService;
 	
-
+	@GetMapping("/test")
+    public String test() {
+        return ("test");
+    }
 	
 	@GetMapping("/all")
     public List<Users> getAll() {

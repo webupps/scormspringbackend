@@ -23,7 +23,7 @@ public class Users {
     private String password;
     @Column(name="phone", length=255)
 	private String phone;
-    @Column(name="role", length=10)
+    @Column(name="role", length=255)
 	private String role;
 
 
