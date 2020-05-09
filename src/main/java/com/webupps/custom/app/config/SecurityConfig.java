@@ -1,16 +1,16 @@
 package com.webupps.custom.app.config;
 
 //import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+//import org.springframework.context.annotation.Configuration;
 //import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 //import com.webupps.custom.app.repository.UsersRepository;
 //import com.webupps.custom.app.service.DefaultUserDetailsService;
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class SecurityConfig {
 	/*
     @Autowired
