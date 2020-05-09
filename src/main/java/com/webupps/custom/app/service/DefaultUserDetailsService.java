@@ -41,10 +41,10 @@ public class DefaultUserDetailsService implements UserDetailsService {
 
     private String passwordNoEncoding(Users user) {
         //return "{noop}" + user.getPassword();
-    	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
+    	/*PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
     	String encodedPassword = passwordEncoder.encode(user.getPassword());
     	System.out.println(user.getPassword());
-    	System.out.println(encodedPassword);
-    	return encodedPassword;
+    	System.out.println(encodedPassword); */
+    	return user.getPassword();
     }
 }

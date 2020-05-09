@@ -1,10 +1,8 @@
  package com.webupps.custom.app.resource;
 
-///import java.util.Collections;
-import java.util.List;
-//import java.util.Map;
 
-//import javax.validation.Valid;
+import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,9 +17,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.webupps.custom.app.model.Users;
+import com.webupps.custom.app.repository.CheckUserRepository;
 import com.webupps.custom.app.repository.UsersRepository;
 import com.webupps.custom.app.service.EmailValidatorService;
 import com.webupps.custom.app.service.PhoneValidatorService;
+import com.webupps.custom.app.service.UserAlreadyExistAuthenticationException;
+
 
 @RestController
 @RequestMapping("/v1/users")
@@ -31,7 +32,13 @@ public class UsersResource {
     UsersRepository usersRepository;
 	
 	@Autowired
+	CheckUserRepository checkUserRepository;
+	
+	@Autowired
 	private PhoneValidatorService phoneValidatorService;
+	
+	@Autowired
+
 	
 	@GetMapping("/test")
     public String test() {
@@ -65,6 +72,39 @@ public class UsersResource {
     	//usersRepository.save(users);
         //return new ResponseEntity<Users>(users, new HttpHeaders(), HttpStatus.OK);
     }
+    
+    @PostMapping("/registration")
+    public  ResponseEntity<?> registerUserAccount (@RequestBody Users users) {
+    	System.out.println("testing");
+           System.out.println(emailExist(users.getUsername()));
+           System.out.println("testing");
+        if (emailExist(users.getUsername())) {  
+            throw new UserAlreadyExistAuthenticationException(
+              "There is an account with that email address: "
+              +  users.getUsername());
+        } else { 
+        	
+           // Users updated = service.createOrUpdateEmployee(employee);
+        	if(phoneValidatorService.validatePhoneNumber(users.getPhone()) || EmailValidatorService.isValidEmailAddress(users.getUsername())) {
+        		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
+            	String encodedPassword = passwordEncoder.encode(users.getPassword());
+            	users.setRole("ROLE_USER");
+        		users.setPassword(encodedPassword);
+            	usersRepository.save(users);
+        		return new ResponseEntity<Users>(users, new HttpHeaders(), HttpStatus.OK);
+    		} else  {  
+    			return new ResponseEntity<Users>(users, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE);
+    		}
+        	
+        	
+        }
+   
+    }
+    	
+	private boolean emailExist(String username) {
+        return checkUserRepository.findByUsername(username) != null;
+    }
+
     /*
     @PostMapping("/add")
 	public @ResponseBody Map<String,Boolean> addNewPhone(@Valid @RequestBody Phone obj) {			
