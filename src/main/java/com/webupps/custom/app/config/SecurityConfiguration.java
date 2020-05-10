@@ -1,27 +1,72 @@
 package com.webupps.custom.app.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.webupps.custom.app.repository.UsersRepository;
-import com.webupps.custom.app.service.DefaultUserDetailsService;
 
-@Configuration
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 //@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-	 
+private DataSource dataSource;
+    
+    private PasswordEncoder passwordEncoder;
+    private UserDetailsService userDetailsService;
+    
+
+    public SecurityConfiguration(final DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    @Override
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService())
+                .passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        if (passwordEncoder == null) {
+        	Map<String, PasswordEncoder> encoders = new HashMap<>();
+        	encoders.put("bcrypt", new BCryptPasswordEncoder());
+        	DelegatingPasswordEncoder delegatingPasswordEncoder = 
+        			 new DelegatingPasswordEncoder("bcrypt",encoders);        	
+        	delegatingPasswordEncoder.setDefaultPasswordEncoderForMatches(new BCryptPasswordEncoder(10));
+        	
+            passwordEncoder = delegatingPasswordEncoder;
+        }
+        return passwordEncoder;
+    }
+
+    @Bean
+    @Override
+    public UserDetailsService userDetailsService() {
+        if (userDetailsService == null) {
+            userDetailsService = new JdbcDaoImpl();
+            ((JdbcDaoImpl) userDetailsService).setDataSource(dataSource);
+        }
+        return userDetailsService;
+    }
 	 /*
 	 @Autowired
 	 private UsersRepository usersRepository;
@@ -40,7 +85,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	    	auth.userDetailsService(new DefaultUserDetailsService(usersRepository));
 	    }*/
 	 
-	  @Autowired
+	 /* @Autowired
 	  private UsersRepository usersRepository;
 	 
 	  @Autowired
@@ -90,7 +135,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder getPasswordEncoder() {
 	   //return NoOpPasswordEncoder.getInstance();
 		return new BCryptPasswordEncoder();
-	}
+	} */
 	
 	
 	

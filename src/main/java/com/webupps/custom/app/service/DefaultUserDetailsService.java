@@ -33,7 +33,8 @@ public class DefaultUserDetailsService implements UserDetailsService {
 
             return new User(user.getUsername(),
                     passwordNoEncoding(user),
-                    Collections.singletonList(new SimpleGrantedAuthority(user.getRole())));
+                   // Collections.singletonList(new SimpleGrantedAuthority(user.getRole())));
+                    Collections.singletonList(new SimpleGrantedAuthority(user.getName())));
         }
 
         return null;

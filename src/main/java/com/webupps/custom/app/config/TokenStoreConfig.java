@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import javax.sql.DataSource;
 
-@Configuration
+
 public class TokenStoreConfig {
 	
 	@Autowired

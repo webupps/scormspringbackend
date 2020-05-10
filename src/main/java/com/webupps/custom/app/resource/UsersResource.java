@@ -88,7 +88,7 @@ public class UsersResource {
         	if(phoneValidatorService.validatePhoneNumber(users.getPhone()) || EmailValidatorService.isValidEmailAddress(users.getUsername())) {
         		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
             	String encodedPassword = passwordEncoder.encode(users.getPassword());
-            	users.setRole("ROLE_USER");
+            	//users.setRole("ROLE_USER");
         		users.setPassword(encodedPassword);
             	usersRepository.save(users);
         		return new ResponseEntity<Users>(users, new HttpHeaders(), HttpStatus.OK);

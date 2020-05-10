@@ -45,7 +45,8 @@ public class DefaultAuthenticationProvider implements AuthenticationProvider {
                 return new UsernamePasswordAuthenticationToken(
                         user.getUsername(),
                         passwordNoEncoding(user),
-                        Collections.singleton(new SimpleGrantedAuthority(user.getRole())));
+                        //Collections.singleton(new SimpleGrantedAuthority(user.getRole())));
+                        Collections.singleton(new SimpleGrantedAuthority(user.getName())));
             }
         }
 
