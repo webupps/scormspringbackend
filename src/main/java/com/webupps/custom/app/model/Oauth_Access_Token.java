@@ -1,12 +1,14 @@
 package com.webupps.custom.app.model;
 
+import java.sql.Blob;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
-import com.mysql.cj.jdbc.Blob;
+//import com.mysql.cj.jdbc.Blob;
 
 @Entity
 @Table(name = "oauth_access_token", catalog = "scormspringbackend")

@@ -8,7 +8,8 @@ import javax.persistence.Table;
 
 
 
-import com.mysql.cj.jdbc.Blob;
+//import com.mysql.cj.jdbc.Blob;
+import java.sql.Blob;
 
 
 @Entity
