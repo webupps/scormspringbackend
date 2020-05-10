@@ -14,27 +14,27 @@ import javax.persistence.Table;
 @Table(name = "oauth_access_token", catalog = "scormspringbackend")
 public class Oauth_Access_Token {
 	@Id
-	@Column(name="authentication_id", length=256)
+	@Column(name="authentication_id", length=256, nullable=true)
     private String authentication_id;
 	
-	@Column(name="token_id", length=256)
+	@Column(name="token_id", length=256, nullable=true)
     private String token_id;
 	
-	@Column(name="token")
+	@Column(name="token", nullable=true)
 	@Lob
     private Blob token;
 	
-	@Column(name="users_name", length=256)
+	@Column(name="users_name", length=256, nullable=true)
     private String users_name;
 	
-	@Column(name="client_id", length=256)
+	@Column(name="client_id", length=256, nullable=true)
     private String client_id;
 	
-	@Column(name="authentication")
+	@Column(name="authentication", nullable=true)
 	@Lob
     private Blob authentication;
 	
-	@Column(name="refresh_token", length=256)
+	@Column(name="refresh_token", length=256, nullable=true)
     private String refresh_token;
 
 	public String getAuthentication_id() {

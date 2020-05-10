@@ -15,16 +15,15 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @Column(name="name", length=255)
+    @Column(name="name", length=256)
     private String name;
-    @Column(name="username", unique=true, nullable=false, length=255)
+    @Column(name="username", unique=true, nullable=false, length=256)
     private String username;
-    @Column(name="password", nullable=false, length=255)
+    @Column(name="password", nullable=false, length=256)
     private String password;
-    @Column(name="phone", length=255)
+    @Column(name="phone", length=256)
 	private String phone;
-    @Column(name="role", length=255)
-	private String role;
+
 
 
     public Users() {
@@ -71,12 +70,5 @@ public class Users {
 		this.phone = phone;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
 
 }
